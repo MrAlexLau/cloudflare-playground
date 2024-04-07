@@ -1,6 +1,9 @@
 <script>
-  let prompt = "Eclipses";
+  let prompt = "Public speaking";
+  let status = "";
   let responseBody;
+  let skillDetailsResponse;
+  let summaryResponse;
 
   function requestOptions(opts = {}) {
     return {
@@ -10,16 +13,26 @@
   }
 
   async function submitPrompt() {
-    responseBody = "Summarizing your topic...";
+    skillDetailsResponse = null;
+    summaryResponse = null;
 
-    const fullBody = await fetch(
+    status = "Finding out more about your topic...";
+
+    skillDetailsResponse = await fetch(
       "https://worker-restless-cake-bbb8.mralexlau.workers.dev",
       requestOptions({ prompt })
     ).then((response) => {
       return response.json();
     });
 
-    responseBody = fullBody[0].response;
+    // responseBody = skillDetailsResponse[0].response;
+    status = "Summarizing these findings...";
+    summaryResponse = await fetch(
+      "https://text-summarizer-2.mralexlau.workers.dev",
+      requestOptions({ prompt })
+    ).then((response) => {
+      return response.json();
+    });
   }
 </script>
 
@@ -27,7 +40,7 @@
 
 <div>
   <div>
-    What's a concept you would like to learn more about?
+    What's a skill you would like to learn how to do or improve upon?
     <input bind:value={prompt} /> <br />
 
     <a href="#" on:click={submitPrompt}>
@@ -36,8 +49,22 @@
   </div>
 
   <div>
-    {responseBody || ""}
+    {status || ""}
   </div>
+
+  {#if skillDetailsResponse && skillDetailsResponse.length > 0}
+    <div>
+      Here's a lot of details for learning about {prompt}:
+      {skillDetailsResponse[0].response || ""}
+    </div>
+  {/if}
+
+  {#if summaryResponse && summaryResponse.length > 0}
+    <div>
+      Here's a lot of details for learning about {prompt}:
+      {summaryResponse[0].summary || ""}
+    </div>
+  {/if}
 </div>
 
 <style>
