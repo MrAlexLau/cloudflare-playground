@@ -29,7 +29,7 @@
     status = "Summarizing these findings...";
     summaryResponse = await fetch(
       "https://text-summarizer-2.mralexlau.workers.dev",
-      requestOptions({ prompt })
+      requestOptions({ prompt: skillDetailsResponse[0].response })
     ).then((response) => {
       return response.json();
     });
@@ -61,7 +61,7 @@
 
   {#if summaryResponse && summaryResponse.length > 0}
     <div>
-      Here's a lot of details for learning about {prompt}:
+      Here's a summary for learning about {prompt}:
       {summaryResponse[0].summary || ""}
     </div>
   {/if}
