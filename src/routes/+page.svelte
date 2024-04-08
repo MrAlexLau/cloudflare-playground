@@ -5,6 +5,7 @@
   let skillDetailsResponse;
   let summaryResponse;
   let imageSteps = [];
+  let summaryItem;
 
   function requestOptions(opts = {}) {
     return {
@@ -26,7 +27,6 @@
       return response.json();
     });
 
-    // responseBody = skillDetailsResponse[0].response;
     status = "Summarizing these findings...";
     summaryResponse = await fetch(
       "https://text-summarizer-2.mralexlau.workers.dev",
@@ -35,10 +35,11 @@
       return response.json();
     });
 
+    summaryItem = summaryResponse[0].summary;
 
     status = "Visualizing your topic...";
-    for(let i = 0; i < summaryResponse[0].summary.length; i++) {
-      const sentence = summaryResponse[0].summary.split(".")[i];
+    for(let i = 0; i < summaryItem.length; i++) {
+      const sentence = summaryItem.split(".")[i];
 
       const imageResponse = await fetch(
         "https://text-to-image.mralexlau.workers.dev",
@@ -57,7 +58,7 @@
   }
 </script>
 
-<h2>Concept Visualizer</h2>
+<h2>Tutorial Visualizer</h2>
 
 <div>
   <div>
@@ -74,16 +75,18 @@
   </div>
 
   {#if skillDetailsResponse && skillDetailsResponse.length > 0}
-    <div>
+    <!-- Remove `display: none` to see more details -->
+    <div style="display: none">
       Here's a lot of details for learning about {prompt}:
       {skillDetailsResponse[0].response || ""}
     </div>
   {/if}
 
   {#if summaryResponse && summaryResponse.length > 0}
-    <div>
+    <!-- Remove `display: none` to see more details -->
+    <div style="display: none">
       Here's a summary for learning about {prompt}:
-      {summaryResponse[0].summary || ""}
+      {summaryItem || ""}
     </div>
   {/if}
 
