@@ -1,10 +1,20 @@
 <script>
+  import Loader from '$lib/Loader.svelte';
+  import ComicPanel from '$lib/ComicPanel.svelte';
+
   let prompt = "Public speaking";
   let status = "";
   let responseBody;
   let skillDetailsResponse;
   let summaryResponse;
-  let imageSteps = [];
+  let imageSteps = [
+    // { sentence: "foo bar baz e-block bg-green-400 border-green-600 border-2 border-solid hover:bg-accent-medium-blue text-white font-bold py-2 px-4 rounded focus:outline-none cursor", imageResponse: "https://www.akc.org/wp-content/uploads/2017/11/Pembroke-Welsh-Corgi-standing-outdoors-in-the-fall.jpg"},
+
+    // { sentence: "foo", imageResponse: "https://www.akc.org/wp-content/uploads/2017/11/Pembroke-Welsh-Corgi-standing-outdoors-in-the-fall.jpg"},
+
+    // { sentence: "foo", imageResponse: "https://www.akc.org/wp-content/uploads/2017/11/Pembroke-Welsh-Corgi-standing-outdoors-in-the-fall.jpg"}
+
+  ];
   let summaryItem;
 
   function requestOptions(opts = {}) {
@@ -35,11 +45,12 @@
       return response.json();
     });
 
-    summaryItem = summaryResponse[0].summary;
+    summaryItem = summaryResponse[0].summary.split(".").filter((str) => str.trim().length > 0);
 
-    status = "Visualizing your topic...";
+
     for(let i = 0; i < summaryItem.length; i++) {
-      const sentence = summaryItem.split(".")[i];
+      status = `Visualizing your topic... (${i + 1} of ${summaryItem.length})`;
+      const sentence = summaryItem[i];
 
       const imageResponse = await fetch(
         "https://text-to-image.mralexlau.workers.dev",
@@ -55,26 +66,32 @@
       imageSteps = [...imageSteps, { sentence, imageResponse }]
     };
 
+    status = "Done! See your tutorial below."
+
   }
 </script>
 
-<h1 class="text-3xl font-bold underline">
+<h1 class="text-3xl font-bold underline text-center mt-10">
   Tutorial Visualizer
 </h1>
 
-<div>
-  <div>
+<div class="">
+  <div class="text-center mt-10">
     What's a skill you would like to learn how to do or improve upon?
-    <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" bind:value={prompt} /> <br />
+    <div>
+      <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " bind:value={prompt} />
 
-    <a href="" class="button inline-block bg-green-400 border-green-600 border-2 border-solid hover:bg-accent-medium-blue text-white font-bold py-2 px-4 rounded focus:outline-none cursor-pointer" on:click={submitPrompt}>
-      Go
-    </a>
+      <a href="" class="button inline-block bg-green-400 border-green-600 border-solid hover:bg-accent-medium-blue text-white font-bold py-2 px-4 rounded focus:outline-none cursor-pointer" on:click={submitPrompt}>
+        Go
+      </a>
+    </div>
   </div>
 
-  <div>
-    {status || ""}
-  </div>
+  {#if status && status.length > 0}
+    <div class="flex justify-center items-center mt-10">
+      <Loader /> <span class="p-4">{status || ""}</span>
+    </div>
+  {/if}
 
   {#if skillDetailsResponse && skillDetailsResponse.length > 0}
     <!-- Remove `display: none` to see more details -->
@@ -92,12 +109,10 @@
     </div>
   {/if}
 
-  {#each imageSteps as imageStep}
-    {imageStep.sentence}
-    <img src="{imageStep.imageResponse}" width="200px">
-  {/each}
+  <div class="w-full">
+    {#each imageSteps as imageStep}
+      <ComicPanel title={imageStep.sentence} url={imageStep.imageResponse} />
+    {/each}
+  </div>
 </div>
-
-<style>
-</style>
 
