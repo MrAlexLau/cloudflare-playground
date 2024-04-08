@@ -58,14 +58,16 @@
   }
 </script>
 
-<h2>Tutorial Visualizer</h2>
+<h1 class="text-3xl font-bold underline">
+  Tutorial Visualizer
+</h1>
 
 <div>
   <div>
     What's a skill you would like to learn how to do or improve upon?
-    <input bind:value={prompt} /> <br />
+    <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" bind:value={prompt} /> <br />
 
-    <a href="#" on:click={submitPrompt}>
+    <a href="" class="button inline-block bg-green-400 border-green-600 border-2 border-solid hover:bg-accent-medium-blue text-white font-bold py-2 px-4 rounded focus:outline-none cursor-pointer" on:click={submitPrompt}>
       Go
     </a>
   </div>
