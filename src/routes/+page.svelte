@@ -4,6 +4,7 @@
   let responseBody;
   let skillDetailsResponse;
   let summaryResponse;
+  let imageSteps = [];
 
   function requestOptions(opts = {}) {
     return {
@@ -33,6 +34,26 @@
     ).then((response) => {
       return response.json();
     });
+
+
+    status = "Visualizing your topic...";
+    for(let i = 0; i < summaryResponse[0].summary.length; i++) {
+      const sentence = summaryResponse[0].summary.split(".")[i];
+
+      const imageResponse = await fetch(
+        "https://text-to-image.mralexlau.workers.dev",
+        requestOptions({ prompt: sentence })
+      ).then((response) => {
+          return response.blob();
+      }).then(function(blob) {
+        const objectURL = URL.createObjectURL(blob);
+        console.log('objectURL', objectURL)
+        return objectURL;
+      });
+
+      imageSteps = [...imageSteps, { sentence, imageResponse }]
+    };
+
   }
 </script>
 
@@ -65,6 +86,11 @@
       {summaryResponse[0].summary || ""}
     </div>
   {/if}
+
+  {#each imageSteps as imageStep}
+    {imageStep.sentence}
+    <img src="{imageStep.imageResponse}" width="200px">
+  {/each}
 </div>
 
 <style>
