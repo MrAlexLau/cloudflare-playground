@@ -1,6 +1,6 @@
 <script>
-  import Loader from '$lib/Loader.svelte';
   import ComicPanel from '$lib/ComicPanel.svelte';
+  import Status from '$lib/Status.svelte';
 
   let prompt = "Public speaking";
   let status = "";
@@ -16,6 +16,8 @@
 
   ];
   let summaryItem;
+  let isLoading;
+  let isDone;
 
   function requestOptions(opts = {}) {
     return {
@@ -24,12 +26,18 @@
     }
   }
 
-  async function submitPrompt() {
+  function resetState() {
     skillDetailsResponse = null;
     summaryResponse = null;
+    isLoading = true;
+    isDone = false;
+    imageSteps = [];
+  }
 
-    status = "Finding out more about your topic...";
+  async function submitPrompt() {
+    resetState();
 
+    status = "Researching your topic...";
     skillDetailsResponse = await fetch(
       "https://worker-restless-cake-bbb8.mralexlau.workers.dev",
       requestOptions({ prompt })
@@ -46,8 +54,6 @@
     });
 
     summaryItem = summaryResponse[0].summary.split(".").filter((str) => str.trim().length > 0);
-
-
     for(let i = 0; i < summaryItem.length; i++) {
       status = `Visualizing your topic... (${i + 1} of ${summaryItem.length})`;
       const sentence = summaryItem[i];
@@ -59,7 +65,6 @@
           return response.blob();
       }).then(function(blob) {
         const objectURL = URL.createObjectURL(blob);
-        console.log('objectURL', objectURL)
         return objectURL;
       });
 
@@ -68,6 +73,8 @@
 
     status = "Done! See your tutorial below."
 
+    isLoading = false;
+    isDone = true;
   }
 </script>
 
@@ -78,6 +85,7 @@
 <div class="">
   <div class="text-center mt-10">
     What's a skill you would like to learn how to do or improve upon?
+
     <div>
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " bind:value={prompt} />
 
@@ -87,14 +95,15 @@
     </div>
   </div>
 
+
   {#if status && status.length > 0}
     <div class="flex justify-center items-center mt-10">
-      <Loader /> <span class="p-4">{status || ""}</span>
+      <Status status={status} isLoading={isLoading} />
     </div>
   {/if}
 
   {#if skillDetailsResponse && skillDetailsResponse.length > 0}
-    <!-- Remove `display: none` to see more details -->
+    <!-- Remove `display: none` to see more output details -->
     <div style="display: none">
       Here's a lot of details for learning about {prompt}:
       {skillDetailsResponse[0].response || ""}
@@ -102,7 +111,7 @@
   {/if}
 
   {#if summaryResponse && summaryResponse.length > 0}
-    <!-- Remove `display: none` to see more details -->
+    <!-- Remove `display: none` to see more output details -->
     <div style="display: none">
       Here's a summary for learning about {prompt}:
       {summaryItem || ""}
