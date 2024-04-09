@@ -84,7 +84,7 @@
 
 <div class="">
   <div class="text-center mt-10">
-    What's a skill you would like to learn how to do or improve upon?
+    What's a life skill you would like to learn how to do or improve upon?
 
     <div>
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " bind:value={prompt} />
@@ -104,7 +104,7 @@
 
   {#if skillDetailsResponse && skillDetailsResponse.length > 0}
     <!-- Remove `display: none` to see more output details -->
-    <div style="display: none">
+    <div style="display: none1">
       Here's a lot of details for learning about {prompt}:
       {skillDetailsResponse[0].response || ""}
     </div>
@@ -112,7 +112,7 @@
 
   {#if summaryResponse && summaryResponse.length > 0}
     <!-- Remove `display: none` to see more output details -->
-    <div style="display: none">
+    <div style="display: none1">
       Here's a summary for learning about {prompt}:
       {summaryItem || ""}
     </div>

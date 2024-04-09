@@ -1,43 +1,24 @@
-# create-svelte
+### Overview
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This app is a submission for the [Cloudflare AI Challenge](https://dev.to/devteam/join-us-for-the-cloudflare-ai-challenge-3000-in-prizes-5f99). It makes a visual guide for a given life skill that a user would like to learn more about:
 
-## Creating a project
+The app does this with a 3-step process:
+1. Make a request to research more about the given skill.
+2. Summarize these findings.
+3. Create a corresponding visual aid for each step in the summary.
 
-If you're seeing this, you've probably already done this step. Congrats!
+These steps each correspond to a different Cloudflare AI model.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+### Running the App
+This app is made with [sveltekit](https://kit.svelte.dev/) and its installation steps are similar to any other sveltekit project:
 
-# create a new project in my-app
-npm create svelte@latest my-app
 ```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
+npm install
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+### Deploying to Cloudflare
+By default, this app is configured to be deployed to Cloudflare Pages. If you'd like to deploy your own fork of this app, please follow [these directions](https://developers.cloudflare.com/pages/framework-guides/deploy-a-svelte-site/).
 
-To create a production version of your app:
+Once you've completed these steps, you can deploy your application with `npm run deploy`
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
-
-
-## Deploying
-Preview your application `npm run preview`
-Deploy your application `npm run deploy`
