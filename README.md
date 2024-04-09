@@ -7,7 +7,11 @@ The app does this with a 3-step process:
 2. Summarize these findings.
 3. Create a corresponding visual aid for each step in the summary.
 
-These steps each correspond to a different Cloudflare AI model.
+These steps each correspond to a different Cloudflare Worker and AI model. You can preview the app [here](https://cloudflare-playground-bn1.pages.dev/
+).
+
+![Screen Shot 2024-04-09 at 7 23 19 AM](https://github.com/MrAlexLau/cloudflare-playground/assets/75554/0d67bb22-90a8-4288-b448-097560828e12)
+
 
 ### Running the App
 This app is made with [sveltekit](https://kit.svelte.dev/) and its installation steps are similar to any other sveltekit project:
