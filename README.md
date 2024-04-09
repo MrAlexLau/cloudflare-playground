@@ -2,6 +2,9 @@
 
 This app is a submission for the [Cloudflare AI Challenge](https://dev.to/devteam/join-us-for-the-cloudflare-ai-challenge-3000-in-prizes-5f99). It makes a visual guide for a given life skill that a user would like to learn more about:
 
+
+![Screen Shot 2024-04-09 at 7 23 19 AM](https://github.com/MrAlexLau/cloudflare-playground/assets/75554/0d67bb22-90a8-4288-b448-097560828e12)
+
 The app does this with a 3-step process:
 1. Make a request to research more about the given skill.
 2. Summarize these findings.
@@ -9,8 +12,6 @@ The app does this with a 3-step process:
 
 These steps each correspond to a different Cloudflare Worker and AI model. You can preview the app [here](https://cloudflare-playground-bn1.pages.dev/
 ).
-
-![Screen Shot 2024-04-09 at 7 23 19 AM](https://github.com/MrAlexLau/cloudflare-playground/assets/75554/0d67bb22-90a8-4288-b448-097560828e12)
 
 
 ### Running the App
