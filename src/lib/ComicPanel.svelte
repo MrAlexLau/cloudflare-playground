@@ -9,8 +9,6 @@
   </div>
 
   <div class="flex flex-col justify-center sm:flex-row mt-8 sm:mt-6">
-    <div class="sm:pr-6">
-      <img src="{url}" width="600px">
-    </div>
+    <img src="{url}" width="600px">
   </div>
 </div>

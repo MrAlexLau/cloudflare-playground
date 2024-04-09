@@ -98,7 +98,7 @@
 
   {#if status && status.length > 0}
     <div class="flex justify-center items-center mt-10">
-      <Status status={status} isLoading={isLoading} />
+      <Status status={status} isLoading={isLoading} isDone={isDone} />
     </div>
   {/if}
 
