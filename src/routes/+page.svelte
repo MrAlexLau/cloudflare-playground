@@ -108,7 +108,7 @@
 
   {#if skillDetailsResponse && skillDetailsResponse.length > 0}
     <!-- Remove `display: none` to see more output details -->
-    <div style="display: none1">
+    <div style="display: none">
       Here's a lot of details for learning about {prompt}:
       {skillDetailsResponse[0].response || ""}
     </div>
@@ -116,7 +116,7 @@
 
   {#if summaryResponse && summaryResponse.length > 0}
     <!-- Remove `display: none` to see more output details -->
-    <div style="display: none1">
+    <div style="display: none">
       Here's a summary for learning about {prompt}:
       {summaryItem || ""}
     </div>
