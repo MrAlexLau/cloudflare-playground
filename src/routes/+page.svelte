@@ -78,9 +78,13 @@
   }
 </script>
 
-<h1 class="text-3xl font-bold underline text-center mt-10">
-  Tutorial Visualizer
-</h1>
+<div class="text-center bg-teal-600 p-12">
+  <div class="text-4xl font-bold text-center text-white">
+    Guide-ify
+  </div>
+
+  <div class="mt-4">🖼️ 📘 <span class="text-white">Create a visual guide for any skill!</span> 📘 🖼️</div>
+</div>
 
 <div class="">
   <div class="text-center mt-10">
@@ -89,7 +93,7 @@
     <div>
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " bind:value={prompt} />
 
-      <a href="" class="button inline-block bg-green-400 border-green-600 border-solid hover:bg-accent-medium-blue text-white font-bold py-2 px-4 rounded focus:outline-none cursor-pointer" on:click={submitPrompt}>
+      <a href="" class="button inline-block bg-teal-600 border-green-600 border-solid hover:bg-accent-medium-blue text-white font-bold py-2 px-4 rounded focus:outline-none cursor-pointer" on:click={submitPrompt}>
         Go
       </a>
     </div>

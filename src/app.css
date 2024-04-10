@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.text-gradient {
+  @apply bg-gradient-to-r from-teal-300 to-blue-100 inline-block text-transparent bg-clip-text
+}
