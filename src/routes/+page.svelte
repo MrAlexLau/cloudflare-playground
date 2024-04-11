@@ -34,6 +34,34 @@
     imageSteps = [];
   }
 
+  function filterToMinLength(items, minLength) {
+    return items.filter((str) => str.trim().length > minLength);
+  }
+
+  async function summarizeSteps(text) {
+    // Attempt to parse out a text response that contains a numeric list in it.
+    let steps = text.split(/\d\./);
+    if (text.indexOf("1.") >= 0 && filterToMinLength(steps, 0).length > 1) {
+      if (text.indexOf("1.") === 0) {
+        return filterToMinLength(steps, 10)
+      }
+
+      // Pluck off the first item since it's usually something like "Sure, I'd love to tell you about public speaking... etc."
+      const [first, ...restOfSteps] = steps;
+      return filterToMinLength(restOfSteps, 10);
+    }
+
+    const response = await fetch(
+      "https://text-summarizer-2.mralexlau.workers.dev",
+      requestOptions({ prompt: text })
+    ).then((response) => {
+      return response.json();
+    });
+    const summaryBySentence = response[0].summary.split(".");
+
+    return filterToMinLength(summaryBySentence, 0);
+  }
+
   async function submitPrompt() {
     resetState();
 
@@ -46,17 +74,11 @@
     });
 
     status = "Summarizing these findings...";
-    summaryResponse = await fetch(
-      "https://text-summarizer-2.mralexlau.workers.dev",
-      requestOptions({ prompt: skillDetailsResponse[0].response })
-    ).then((response) => {
-      return response.json();
-    });
+    const steps = await summarizeSteps(skillDetailsResponse[0].response)
 
-    summaryItem = summaryResponse[0].summary.split(".").filter((str) => str.trim().length > 0);
-    for(let i = 0; i < summaryItem.length; i++) {
-      status = `Visualizing your topic... (${i + 1} of ${summaryItem.length})`;
-      const sentence = summaryItem[i];
+    for(let i = 0; i < steps.length; i++) {
+      status = `Visualizing your topic... (${i + 1} of ${steps.length})`;
+      const sentence = steps[i];
 
       const imageResponse = await fetch(
         "https://text-to-image.mralexlau.workers.dev",
