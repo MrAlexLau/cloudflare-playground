@@ -22,6 +22,9 @@ npm install
 npm run dev
 ```
 
+### Using Custom Cloudflare Workers
+By default, this project is making requests against Cloudflare Workers that I've created (eg - all of the urls that end in `mralexlau.workers.dev`). You're welcome to use those, however you can also create your own Workers with custom code if you'd like. See [the workers documentation](workers.md) for more details.
+
 ### Deploying to Cloudflare
 By default, this app is configured to be deployed to Cloudflare Pages. If you'd like to deploy your own fork of this app, please follow [these directions](https://developers.cloudflare.com/pages/framework-guides/deploy-a-svelte-site/).
 
