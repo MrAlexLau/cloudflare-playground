@@ -7,14 +7,7 @@
   let responseBody;
   let skillDetailsResponse;
   let summaryResponse;
-  let imageSteps = [
-    // { sentence: "foo bar baz e-block bg-green-400 border-green-600 border-2 border-solid hover:bg-accent-medium-blue text-white font-bold py-2 px-4 rounded focus:outline-none cursor", imageResponse: "https://www.akc.org/wp-content/uploads/2017/11/Pembroke-Welsh-Corgi-standing-outdoors-in-the-fall.jpg"},
-
-    // { sentence: "foo", imageResponse: "https://www.akc.org/wp-content/uploads/2017/11/Pembroke-Welsh-Corgi-standing-outdoors-in-the-fall.jpg"},
-
-    // { sentence: "foo", imageResponse: "https://www.akc.org/wp-content/uploads/2017/11/Pembroke-Welsh-Corgi-standing-outdoors-in-the-fall.jpg"}
-
-  ];
+  let imageSteps = [];
   let summaryItem;
   let isLoading;
   let isDone;
@@ -46,7 +39,8 @@
         return filterToMinLength(steps, 10)
       }
 
-      // Pluck off the first item since it's usually something like "Sure, I'd love to tell you about public speaking... etc."
+      // Pluck off the first item since it's usually something like:
+      // "Sure, I'd love to tell you about public speaking... etc."
       const [first, ...restOfSteps] = steps;
       return filterToMinLength(restOfSteps, 10);
     }
