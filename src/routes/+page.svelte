@@ -11,6 +11,22 @@
   let summaryItem;
   let isLoading;
   let isDone;
+  let hideSettings = true;
+
+  let selectedTextModel = "@cf/mistral/mistral-7b-instruct-v0.1";
+
+  const textModels = [
+    "@cf/meta/llama-2-7b-chat-fp16",
+    "@cf/meta/llama-2-7b-chat-int8",
+    "@cf/mistral/mistral-7b-instruct-v0.1",
+    "@cf/tiiuae/falcon-7b-instruct",
+    "@hf/google/gemma-7b-it",
+    "@hf/nousresearch/hermes-2-pro-mistral-7b",
+  ]
+
+  function toggleSettings() {
+    hideSettings = !hideSettings;
+  }
 
   function requestOptions(opts = {}) {
     return {
@@ -62,7 +78,7 @@
     status = "Researching your topic...";
     skillDetailsResponse = await fetch(
       "https://worker-restless-cake-bbb8.mralexlau.workers.dev",
-      requestOptions({ prompt })
+      requestOptions({ prompt, textModel: selectedTextModel })
     ).then((response) => {
       return response.json();
     });
@@ -102,8 +118,38 @@
   <div class="mt-4">🖼️ 📘 <span class="text-white">Create a visual guide for any skill!</span> 📘 🖼️</div>
 </div>
 
+
+
+<div class="mt-4 text-right pr-2">
+  <a
+    href=""
+    class="mt-6 underline cursor-pointer text-gray-700"
+    on:click={toggleSettings}
+  >Settings</a> ⚙️
+</div>
+
+<div id="settings-container" class="text-right p-2" class:hidden={hideSettings}>
+  <form>
+    Text model:
+    <select
+      bind:value={selectedTextModel}
+    >
+      {#each textModels as textModel}
+        <option value={textModel}>
+          {textModel}
+        </option>
+      {/each}
+    </select>
+  </form>
+
+  <div class="p-2 pt-10">
+    <hr />
+  </div>
+</div>
+
+
 <div class="">
-  <div class="text-center mt-10">
+  <div class="text-center mt-6">
     What's a life skill you would like to learn how to do or improve upon?
 
     <div>
@@ -115,10 +161,9 @@
     </div>
   </div>
 
-
-  {#if status && status.length > 0}
+  {#if status && status.length > 0 && isLoading}
     <div class="flex justify-center items-center mt-10">
-      <Status status={status} isLoading={isLoading} isDone={isDone} />
+      <Status status={status} />
     </div>
   {/if}
 

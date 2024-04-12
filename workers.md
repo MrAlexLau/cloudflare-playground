@@ -37,13 +37,13 @@ export default {
     const detailedPrompt = `Tell me everything there is to know when learning about ${body.prompt}. Please provide me with a list of actionable steps I can take and be as detailed as possible with these actions.`
     const params = { prompt: detailedPrompt }
 
-    let response = await ai.run('@cf/mistral/mistral-7b-instruct-v0.1', params);
+    const modelName = body?.textModel?.length > 0 ? body.textModel : '@cf/mistral/mistral-7b-instruct-v0.1';
+    let response = await ai.run(modelName, params);
     tasks.push(response);
 
     return Response.json(tasks, { headers: corsHeaders});
   }
 };
-
 ```
 
 # Summarization Worker
