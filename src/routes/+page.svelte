@@ -13,7 +13,7 @@
   let isDone;
   let hideSettings = true;
 
-  let selectedTextModel = "@cf/mistral/mistral-7b-instruct-v0.1";
+  let selectedTextModel = "@cf/tiiuae/falcon-7b-instruct";
 
   const textModels = [
     "@cf/meta/llama-2-7b-chat-fp16",
